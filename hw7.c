@@ -30,6 +30,8 @@ void deleteFirst(struct container** pointerToHead);   // Question 3
 void deleteAll(struct container** pointerToHead);   // Question 4
 void printAll(struct container* root);  // Question 5
 void printPerson(struct container* c); // prints person after found using search 
+void recursiveDelete(struct container *c);
+
 int main()
 {
   struct container* head = NULL; // Declare head as a local variable of main function
@@ -125,18 +127,31 @@ void printFirst(struct container* root)
   }
 }
 
-void deleteAll(struct container** pointerToHead) {
-
-  /*
-  The function will delete all nodes in the linked list. 
-  You must make sure no memory leak. The function must 
-  use recursion, instead of loop, to traverse through 
-  the linked list. You can call deleteFirst function 
-  in this function.
-  */
+void recursiveDelete(struct container *c) {
+  if (!c) {
+    printf("list is now empty\n");
+  } else {
+    recursiveDelete(c->next);
+    free(c->plink);
+    free(c);
   }
+}
+  /* using recursion we delete the last node in the list first
+   * then recursively we delete all the others. */
+void deleteAll(struct container** pointerToHead) {
+  recursiveDelete(*pointerToHead);
+}
 
-void printPerson(struct container* c) {
+/* delete the first container and its person in the list */
+void deleteFirst(struct container** pointerToHead) {
+  struct container *c;
+  c = *pointerToHead;
+  *pointerToHead = c->next;
+  free(c->plink);
+  free(c);
+}
+
+vo/id printPerson(struct container* c) {
   if(!c) {
     printf("\n\nname = %s\n", c->plink->name);
     printf("email = %s\n", c->plink->email);

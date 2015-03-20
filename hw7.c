@@ -29,7 +29,7 @@ struct container* search(struct container* root, char* sname);  // Question 2
 void deleteFirst(struct container** pointerToHead);   // Question 3
 void deleteAll(struct container** pointerToHead);   // Question 4
 void printAll(struct container* root);  // Question 5
- 
+void printPerson(struct container* c); // prints person after found using search 
 int main()
 {
   struct container* head = NULL; // Declare head as a local variable of main function
@@ -55,6 +55,8 @@ int main()
 // print all added persons.
 void branching(char c, struct container** pointerToHead)
 {
+  /* we need a container pointer */
+  struct container *pp;
   char *p;
   switch (c) {
   case 'i':
@@ -62,7 +64,9 @@ void branching(char c, struct container** pointerToHead)
     break;
   case 's':
     p = get_name();
-    search(*pointerToHead, p);
+    pp = search(*pointerToHead, p);
+    printPerson(pp); /* print the person we found */
+    free(p);
     break;
   case 'd':
     deleteFirst(pointerToHead);
@@ -121,8 +125,59 @@ void printFirst(struct container* root)
   }
 }
 
-struct container* search(struct container* root, char* sname) {
+void deleteAll(struct container** pointerToHead) {
 
+  /*
+  The function will delete all nodes in the linked list. 
+  You must make sure no memory leak. The function must 
+  use recursion, instead of loop, to traverse through 
+  the linked list. You can call deleteFirst function 
+  in this function.
+  */
+  }
+
+void printPerson(struct container* c) {
+  if(!c) {
+    printf("\n\nname = %s\n", c->plink->name);
+    printf("email = %s\n", c->plink->email);
+    printf("phone = %d\n", c->plink->phone);
+    switch (c->plink->degree)
+    {
+    case diploma:
+      printf("degree = diploma\n");
+      break;
+ 
+    case bachelor:
+      printf("degree = bachelor\n");
+      break;
+ 
+    case master:
+      printf("degree = master\n");
+      break;
+ 
+    case doctor:
+      printf("degree = doctor\n");
+      break;
+ 
+    default:
+      printf("System Error: degree information corruption.\n");
+      break;
+    }
+  }
+}
+
+
+struct container* search(struct container* root, char* sname) {
+  struct container *c;
+  c = root;
+
+  while(!c) {
+    if(strcmp(sname, c->plink->name) == 0 ) {
+      break;
+    }
+    c = c->next;
+  }
+  return c;
 }
  
 int insertion(struct container** pointerToHead) {

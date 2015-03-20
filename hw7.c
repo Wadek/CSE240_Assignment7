@@ -120,6 +120,10 @@ void printFirst(struct container* root)
     printFirst(root->next);
   }
 }
+
+struct container* search(struct container* root, char* sname) {
+
+}
  
 int insertion(struct container** pointerToHead) {
   

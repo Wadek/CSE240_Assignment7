@@ -21,10 +21,10 @@ struct person {
   education degree;
 }; // 72 bits;
  
-void branching(char c);   // given
+void branching(char c, struct container** pointerToHead);   // given
 char* get_name(); // given
 void printFirst(struct container* root);  // given
-int insertion(struct container** pointerToHead);  // Question 1
+void insertion(struct container** pointerToHead);  // Question 1
 struct container* search(struct container* root, char* sname);  // Question 2
 void deleteFirst(struct container** pointerToHead);   // Question 3
 void deleteAll(struct container** pointerToHead);   // Question 4
@@ -127,6 +127,17 @@ void printFirst(struct container* root)
   }
 }
 
+/*recursively print all items in container until null pointer reached */
+void printAll(struct container* root) {
+  if (!root) {
+    printf("list is now empty\n");
+  } else {
+    printAll(root->next);
+    printPerson(root);
+  }
+}
+
+/* recursively delete the container and the person inside the container, free memory */
 void recursiveDelete(struct container *c) {
   if (!c) {
     printf("list is now empty\n");
@@ -151,7 +162,7 @@ void deleteFirst(struct container** pointerToHead) {
   free(c);
 }
 
-vo/id printPerson(struct container* c) {
+void printPerson(struct container* c) {
   if(!c) {
     printf("\n\nname = %s\n", c->plink->name);
     printf("email = %s\n", c->plink->email);
@@ -195,7 +206,7 @@ struct container* search(struct container* root, char* sname) {
   return c;
 }
  
-int insertion(struct container** pointerToHead) {
+void insertion(struct container** pointerToHead) {
   
   struct container *c, *head;
   struct person *p;

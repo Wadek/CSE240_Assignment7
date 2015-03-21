@@ -90,7 +90,7 @@ void branching(char c, struct container** pointerToHead)
 char * get_name()
 {
   char *p = (char *) malloc(32);//Use dynamic memory, which does not go out of scope
-  pintf("Please enter a name for the search: ");
+  printf("Please enter a name for the search: ");
   scanf("%s", p);
   return p;
 }
@@ -237,10 +237,10 @@ void insertion(struct container** pointerToHead) {
     *pointerToHead = c;
   }
   else {
-    struct person *current, *previous;
+    struct container *current, *previous;
     current = previous = head;
     while (current) {
-      if (strcmp(c->plink->name, current->name) <= 0) {
+      if (strcmp(c->plink->name, current->plink->name) <= 0) {
         if (current == head) {
           head = c;
         } else {

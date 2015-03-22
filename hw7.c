@@ -139,9 +139,7 @@ void printFirst(struct container* root)
 
 /*recursively print all items in container until null pointer reached */
 void printAll(struct container* root) {
-  if (!root) {
-    printf("list is now empty\n");
-  } else {
+  if (root) {
     printAll(root->next);
     printPerson(root);
   }
@@ -149,9 +147,7 @@ void printAll(struct container* root) {
 
 /* recursively delete the container and the person inside the container, free memory */
 void recursiveDelete(struct container *c) {
-  if (!c) {
-    printf("list is now empty\n");
-  } else {
+  if (c) {
     recursiveDelete(c->next);
     free(c->plink);
     free(c);
@@ -248,7 +244,7 @@ void insertion(struct container** pointerToHead) {
     struct container *current, *previous;
     current = previous = *pointerToHead;
     while (current) {
-      if (strcmp(c->plink->name, current->plink->name) <= 0) {
+      if (strcmp(c->plink->name, current->plink->name) >= 0) {
         if (current == *pointerToHead) {
           *pointerToHead = c;
         } else {

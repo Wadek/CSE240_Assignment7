@@ -168,7 +168,9 @@ void deleteFirst(struct container** pointerToHead) {
   c = *pointerToHead;
   *pointerToHead = c->next;
   free(c->plink);
+  c->plink = NULL;
   free(c);
+  c = NULL;
 }
 
 void printPerson(struct container* c) {

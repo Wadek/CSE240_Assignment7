@@ -150,13 +150,16 @@ void recursiveDelete(struct container *c) {
   if (c) {
     recursiveDelete(c->next);
     free(c->plink);
+    c->plink = NULL;
     free(c);
+    c = NULL;
   }
 }
   /* using recursion we delete the last node in the list first
    * then recursively we delete all the others. */
 void deleteAll(struct container** pointerToHead) {
   recursiveDelete(*pointerToHead);
+  *pointerToHead = NULL;
 }
 
 /* delete the first container and its person in the list */

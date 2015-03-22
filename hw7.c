@@ -21,6 +21,7 @@ struct person {
   education degree;
 }; // 72 bits;
  
+void flush();                 // forward declaration of functions
 void branching(char c, struct container** pointerToHead);   // given
 char* get_name(); // given
 void printFirst(struct container* root);  // given
@@ -37,6 +38,9 @@ int main()
   struct container* head = NULL; // Declare head as a local variable of main function
   // Print a menu for selection
   char ch = 'i';
+
+  ungetc('\n', stdin); // inject the newline character into input buffer
+
   do {
     printf("Enter your selection\n");
     printf("\ti: insert a new entry\n");
@@ -45,12 +49,18 @@ int main()
     printf("\ts: search an entry\n");
     printf("\tp: print all entries\n");
     printf("\tq: quit \n");
-    fflush(stdin);    // Flush the input buffer. 
+    flush();  // flush the input buffer. To be discussed later
     ch = tolower(getchar());  // Convert any uppercase char to lowercase.
     branching(ch, &head);
-    printf("\n");
   } while (ch != 113);      // 113 is 'q' in ASCII
   return 0;
+}
+
+void flush() {  // flush the input buffer. To be discussed later
+  int c;
+  do {
+    c = getchar();
+  } while (c != '\n' && c != EOF);
 }
  
 // Branch to different tasks: insert a person, search for a person, delete a person
@@ -163,7 +173,7 @@ void deleteFirst(struct container** pointerToHead) {
 }
 
 void printPerson(struct container* c) {
-  if(!c) {
+  if(c) {
     printf("\n\nname = %s\n", c->plink->name);
     printf("email = %s\n", c->plink->email);
     printf("phone = %d\n", c->plink->phone);
@@ -208,15 +218,13 @@ struct container* search(struct container* root, char* sname) {
  
 void insertion(struct container** pointerToHead) {
   
-  struct container *c, *head;
+  struct container *c;
   struct person *p;
 
   c = malloc(sizeof(struct container));
   p = malloc(sizeof(struct person));
   c->plink = p;
   c->next = NULL;
-  
-  head = *pointerToHead;
 
   printf("Enter name, phone, email:\n");
   scanf("%s", p->name);
@@ -238,11 +246,11 @@ void insertion(struct container** pointerToHead) {
   }
   else {
     struct container *current, *previous;
-    current = previous = head;
+    current = previous = *pointerToHead;
     while (current) {
       if (strcmp(c->plink->name, current->plink->name) <= 0) {
-        if (current == head) {
-          head = c;
+        if (current == *pointerToHead) {
+          *pointerToHead = c;
         } else {
           previous->next = c;
         }

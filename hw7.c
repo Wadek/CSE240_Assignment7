@@ -203,7 +203,7 @@ struct container* search(struct container* root, char* sname) {
   struct container *c;
   c = root;
 
-  while(!c) {
+  while(c) {
     if(strcmp(sname, c->plink->name) == 0 ) {
       break;
     }

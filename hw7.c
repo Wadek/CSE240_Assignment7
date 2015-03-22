@@ -173,6 +173,7 @@ void deleteFirst(struct container** pointerToHead) {
   c = NULL;
 }
 
+/*print a single c->plink based on request */
 void printPerson(struct container* c) {
   if(c) {
     printf("\n\nname = %s\n", c->plink->name);
@@ -203,7 +204,7 @@ void printPerson(struct container* c) {
   }
 }
 
-
+/*runs a search by matching characters, only reports find if exact match */
 struct container* search(struct container* root, char* sname) {
   struct container *c;
   c = root;
